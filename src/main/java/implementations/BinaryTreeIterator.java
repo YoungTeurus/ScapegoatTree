@@ -27,6 +27,11 @@ public class BinaryTreeIterator<T> implements TreeIterator<T> {
     }
 
     public T getNext() {
+        BinaryTreeNode<T> nextNode = getNextNode();
+        return nextNode.getValue();
+    }
+
+    BinaryTreeNode<T> getNextNode(){
         if(!hasNext()){
             throw new RuntimeException("BinaryTreeIterator::getNext : iterator has no next node.");
         }
@@ -36,7 +41,7 @@ public class BinaryTreeIterator<T> implements TreeIterator<T> {
 
         pushNodeAndLeftBranchToStack(rightChildOfCurrentNode);
 
-        return currentNode.getValue();
+        return currentNode;
     }
 
     public boolean hasNext() {

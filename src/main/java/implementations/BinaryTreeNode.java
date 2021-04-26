@@ -79,6 +79,26 @@ public class BinaryTreeNode<T> implements TreeNode<T>, Comparable<BinaryTreeNode
         this.value = value;
     }
 
+    public int getSize(){
+        int nodeSize = 1;
+        if(hasLeft()){
+            nodeSize += left.getSize();
+        }
+        if(hasRight()){
+            nodeSize += right.getSize();
+        }
+        return nodeSize;
+    }
+    // Метод для оптимизации производительности: на момент выполнения этого метода мы знаем размер одного из потомков Node.
+    int getOtherChildSize(BinaryTreeNode<T> firstChild){
+        if(firstChild == left && hasRight()){
+            return right.getSize();
+        } else if (firstChild == right && hasLeft()){
+            return left.getSize();
+        }
+        return 0;
+    }
+
     @Override
     public String toString() {
         return "node{" +
