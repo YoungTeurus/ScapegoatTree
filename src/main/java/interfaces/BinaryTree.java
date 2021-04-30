@@ -9,7 +9,6 @@ import java.util.List;
 public interface BinaryTree<T extends Comparable<T>> extends Iterable<T> {
 
     void insert(T value);
-    void insert(BinaryTreeNode<T> node);
 
     void remove(T value);
 
@@ -17,8 +16,8 @@ public interface BinaryTree<T extends Comparable<T>> extends Iterable<T> {
     List<T> findNodesLowerThan(T value);
     List<T> findNodesGreaterThan(T value);
     List<T> findNodesInRange(T from, T to);
-    BinaryTreeNode<T> findLowest();
-    BinaryTreeNode<T> findGreatest();
+    T findLowest();
+    T findGreatest();
 
     int size();
 

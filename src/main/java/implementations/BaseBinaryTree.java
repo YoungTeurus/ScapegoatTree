@@ -162,12 +162,31 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         return sortedValues.subList(indexOfFirstNodeLowerThanOrEqualsValue, indexOfFirstNodeGreaterThanOrEqualsValue);
     }
 
-    public BinaryTreeNode<T> findLowest() {
+    public T findLowest() {
+        Iterator<T> iterator = iterator();
+        if(iterator.hasNext()){
+            return iterator.next();
+        }
         return null;
     }
 
-    public BinaryTreeNode<T> findGreatest() {
-        return null;
+    public T findGreatest() {
+        BinaryTreeNode<T> theMostRightNode = getTheMostRightNode();
+        if(theMostRightNode == null){
+            return null;
+        }
+        return theMostRightNode.getValue();
+    }
+
+    private BinaryTreeNode<T> getTheMostRightNode(){
+        if(isEmpty()){
+            return null;
+        }
+        BinaryTreeNode<T> currentNode = head;
+        while (currentNode.hasRight()){
+            currentNode = currentNode.getRight();
+        }
+        return currentNode;
     }
 
     @Override

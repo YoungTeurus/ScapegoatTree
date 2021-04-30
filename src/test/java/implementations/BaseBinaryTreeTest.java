@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -118,10 +119,48 @@ class BaseBinaryTreeTest {
 
     @Test
     void findLowest() {
+        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        Integer theMinimalValue = -100;
+
+        // Заполняем вектор значениями больше -100, причём -100 стоит посередине.
+        Vector<Integer> randomValues = new Vector<>(100);
+
+        for(int i = 0; i < 100; i++){
+            if (i == 50){
+                randomValues.add(theMinimalValue);
+                continue;
+            }
+            randomValues.add(theMinimalValue + 1 + Math.abs(random.nextInt()) % 200);
+        }
+
+        for (Integer value : randomValues) {
+            baseBinaryTree.insert(value);
+        }
+
+        assertEquals(theMinimalValue, baseBinaryTree.findLowest());
     }
 
     @Test
     void findGreatest() {
+        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        Integer theMaximumNumber = 100;
+
+        // Заполняем вектор значениями больше -100, причём -100 стоит посередине.
+        Vector<Integer> randomValues = new Vector<>(100);
+
+        for(int i = 0; i < 100; i++){
+            if (i == 50){
+                randomValues.add(theMaximumNumber);
+                continue;
+            }
+            randomValues.add(theMaximumNumber - 1 - Math.abs(random.nextInt()) % 200);
+        }
+
+        for (Integer value : randomValues) {
+            baseBinaryTree.insert(value);
+        }
+
+        assertEquals(theMaximumNumber, baseBinaryTree.findGreatest());
     }
 
     @Test
@@ -130,5 +169,21 @@ class BaseBinaryTreeTest {
 
     @Test
     void iterator() {
+        // Подсчитаем сумму элементов:
+        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        int sum = 0;
+        int iteratorSum = 0;
+
+        for (int i = 0; i < 100; i++) {
+            baseBinaryTree.insert(i);
+            sum += i;
+        }
+
+        for (Integer value :
+                baseBinaryTree) {
+            iteratorSum += value;
+        }
+
+        assertEquals(sum, iteratorSum);
     }
 }
