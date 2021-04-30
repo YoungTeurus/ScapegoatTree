@@ -44,6 +44,22 @@ public class BinaryTreeNode<T extends Comparable<T>> implements TreeNode<T>, Com
         return right;
     }
 
+    BinaryTreeNode<T> getLowestFirstGreaterChild(){
+        if(!hasRight()){
+            throw new RuntimeException("BinaryTreeNode::getFirstGreaterChild: у node нет правого потомка!");
+        }
+        BinaryTreeNode<T> rightChild = getRight();
+        return rightChild.getNodeWithLowestValue();
+    }
+
+    private BinaryTreeNode<T> getNodeWithLowestValue(){
+        BinaryTreeNode<T> currentNode = this;
+        while(currentNode.hasLeft()){
+            currentNode = currentNode.getLeft();
+        }
+        return currentNode;
+    }
+
     public boolean hasLeft(){
         return left != null;
     }

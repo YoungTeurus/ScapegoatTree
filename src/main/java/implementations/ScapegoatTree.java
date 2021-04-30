@@ -6,6 +6,7 @@ public class ScapegoatTree<T extends Comparable<T>> extends BaseBinaryTree<T> {
     static double DEFAULT_BALANCE_COEFFICIENT = 0.6667f;
 
     double balanceCoefficient = DEFAULT_BALANCE_COEFFICIENT;
+    int maxNumberOfNodes = 0;
     int currentNumberOfNodes = 0;
 
     ScapegoatTree(){
@@ -26,6 +27,7 @@ public class ScapegoatTree<T extends Comparable<T>> extends BaseBinaryTree<T> {
     @Override
     protected final void actionAfterInsert(BinaryTreeNode<T> insertedNode, Stack<BinaryTreeNode<T>> insertStack) {
         currentNumberOfNodes++;
+        maxNumberOfNodes = Math.max(maxNumberOfNodes, currentNumberOfNodes);
         checkDepthOfInsertStackAndRebalanceTreeIfNeeded(insertedNode, insertStack);
     }
 
@@ -66,7 +68,22 @@ public class ScapegoatTree<T extends Comparable<T>> extends BaseBinaryTree<T> {
         BaseBinaryTree<T> tempTree = new BaseBinaryTree<>(headNode);
 
         tempTree.rebalance();
+        maxNumberOfNodes = currentNumberOfNodes;
 
         parentNode.replaceChild(headNode, tempTree.head);
+    }
+
+    @Override
+    protected void actionAfterRemove() {
+        currentNumberOfNodes--;
+
+        compareCurrentNumberOfNodesToMaxNodesAndRebalanceIfNeeded();
+    }
+
+    private void compareCurrentNumberOfNodesToMaxNodesAndRebalanceIfNeeded(){
+        double criticalNumberOfNodes = balanceCoefficient * maxNumberOfNodes;
+        if(currentNumberOfNodes <= criticalNumberOfNodes){
+            rebalance();
+        }
     }
 }

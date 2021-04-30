@@ -3,7 +3,6 @@ package implementations;
 import interfaces.BinaryTree;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
@@ -59,28 +58,79 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
     }
 
     @Override
-    public void remove(T value) {
-        BinaryTreeNode<T> nodeToRemove = findNodeByValue(value);
-        if(nodeToRemove == null){
+    public void remove(T valueToRemove) {
+        Stack<BinaryTreeNode<T>> searchStack = getSearchStackForValue(valueToRemove);
+        if (!isStackTopNodeValueEqualsTo(searchStack, valueToRemove)){
             return;
         }
 
-        throw new NotImplementedException();
+        BinaryTreeNode<T> nodeToRemove = searchStack.pop();
+        BinaryTreeNode<T> parentNodeOfNodeToRemove;
+
+        boolean isNodeToRemoveIsHead = searchStack.size() == 0;
+
+        if(isNodeToRemoveIsHead){
+            parentNodeOfNodeToRemove = null;
+        } else {
+            parentNodeOfNodeToRemove = searchStack.pop();
+        }
+
+        remove(parentNodeOfNodeToRemove, nodeToRemove);
+
+        actionAfterRemove();
+    }
+
+    protected void actionAfterRemove(){
+
+    }
+
+    private void remove(BinaryTreeNode<T> parentNode, BinaryTreeNode<T> nodeToRemove){
+        boolean isNodeToRemoveIsHead = parentNode == null;
+
+        if(!nodeToRemove.hasLeft()){
+            BinaryTreeNode<T> rightChildOfNodeToRemove = nodeToRemove.getRight();
+            if(!isNodeToRemoveIsHead){
+                parentNode.replaceChild(nodeToRemove, rightChildOfNodeToRemove);
+            } else{
+                head = rightChildOfNodeToRemove;
+            }
+        } else if (!nodeToRemove.hasRight()){
+            BinaryTreeNode<T> leftChildOfNodeToRemove = nodeToRemove.getLeft();
+            if(!isNodeToRemoveIsHead){
+                parentNode.replaceChild(nodeToRemove, leftChildOfNodeToRemove);
+            } else{
+                head = leftChildOfNodeToRemove;
+            }
+        } else{
+            BinaryTreeNode<T> firstGreaterChildOfNodeToRemove = nodeToRemove.getLowestFirstGreaterChild();
+            T valueOfFirstGreaterChild = firstGreaterChildOfNodeToRemove.getValue();
+
+            // TODO: удалять по значению?! Это может быть медленно, так как происходит поиск по дереву!
+            //  (Вложенности не возникнет, так как удаляемый элемент не имеет левого поддерева.)
+            remove(valueOfFirstGreaterChild);
+
+            nodeToRemove.setValue(valueOfFirstGreaterChild);
+        }
+    }
+
+    private boolean isStackTopNodeValueEqualsTo(Stack<BinaryTreeNode<T>> searchStack, T value){
+        if(searchStack.isEmpty()){
+            return false;
+        }
+        BinaryTreeNode<T> stackTop = searchStack.peek();
+        T valueOfStackTop = stackTop.getValue();
+        return valueOfStackTop.equals(value);
     }
 
     @Override
     public BinaryTreeNode<T> findNodeByValue(T valueToFind) {
         Stack<BinaryTreeNode<T>> searchStack = getSearchStackForValue(valueToFind);
-        BinaryTreeNode<T> stackTop = searchStack.peek();
-        T valueOfStackTop = stackTop.getValue();
 
-        if(valueOfStackTop.equals(valueToFind)){
-            return stackTop;
+        if(isStackTopNodeValueEqualsTo(searchStack, valueToFind)){
+            return searchStack.peek();
         }
         return null;
     }
-
-    // TODO: вернуть модификатор доступа private!
 
     /**
      * Метод осуществляет поиск элемента со значением valueToFind по дереву, ведя trace поиска.
@@ -89,6 +139,7 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
      * @param valueToFind Значение для поиска.
      * @return Стек trace поиска.
      */
+    // TODO: вернуть модификатор доступа private!
     Stack<BinaryTreeNode<T>> getSearchStackForValue(@NotNull T valueToFind){
         Stack<BinaryTreeNode<T>> searchStack = new Stack<>();
 

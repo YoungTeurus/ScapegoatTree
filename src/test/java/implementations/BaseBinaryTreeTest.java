@@ -3,10 +3,7 @@ package implementations;
 import interfaces.BinaryTree;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.util.Random;
-import java.util.Stack;
-import java.util.Vector;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,6 +37,40 @@ class BaseBinaryTreeTest {
 
     @Test
     void remove() {
+        BaseBinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        Vector<Integer> addedElements = new Vector<>();
+        Vector<Integer> removedElements = new Vector<>();
+
+        while(addedElements.size() < 1000){
+            int generatedValue = Math.abs(random.nextInt()) % 20001 - 10000;
+            if(addedElements.contains(generatedValue)){
+                continue;
+            }
+            addedElements.add(generatedValue);
+        }
+
+        for (Integer value : addedElements) {
+            baseBinaryTree.insert(value);
+        }
+
+        // Первоначальная проверка вставки:
+        for (Integer value : addedElements) {
+            assertTrue(baseBinaryTree.contains(value));
+        }
+
+        // Удаляем по одному элементу:
+        for(int i = 0; i < 100; i++){
+            Integer valueToRemove = addedElements.get(i);
+            removedElements.add(valueToRemove);
+            baseBinaryTree.remove(valueToRemove);
+            for (Integer value : addedElements) {
+                if(removedElements.contains(value)){
+                    assertFalse(baseBinaryTree.contains(value));
+                } else {
+                    assertTrue(baseBinaryTree.contains(value));
+                }
+            }
+        }
     }
 
     @Test
