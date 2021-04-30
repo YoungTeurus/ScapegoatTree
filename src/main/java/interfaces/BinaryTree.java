@@ -3,8 +3,9 @@ package interfaces;
 import implementations.BinaryTreeNode;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public interface BinaryTree<T> {
+public interface BinaryTree<T extends Comparable<T>> extends Iterable<T> {
 
     void insert(T value);
     void insert(BinaryTreeNode<T> node);
@@ -15,8 +16,6 @@ public interface BinaryTree<T> {
     ArrayList<T> findNodesInRange(T from, T to);
     BinaryTreeNode<T> findLowest();
     BinaryTreeNode<T> findGreatest();
-
-    TreeIterator<T> iterator();
 
     boolean isEmpty();
 }

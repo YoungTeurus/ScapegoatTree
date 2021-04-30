@@ -40,27 +40,27 @@ class BinaryTreeIteratorTest {
         BinaryTreeIterator<Integer> iterator = new BinaryTreeIterator<Integer>(_10);
 
         assertTrue(iterator.hasNext());
-        assertEquals(1, iterator.getNext());
+        assertEquals(1, iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(2, iterator.getNext());
+        assertEquals(2, iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(3, iterator.getNext());
+        assertEquals(3, iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(5, iterator.getNext());
+        assertEquals(5, iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(6, iterator.getNext());
+        assertEquals(6, iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(8, iterator.getNext());
+        assertEquals(8, iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(9, iterator.getNext());
+        assertEquals(9, iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(10, iterator.getNext());
+        assertEquals(10, iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(15, iterator.getNext());
+        assertEquals(15, iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(20, iterator.getNext());
+        assertEquals(20, iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(25, iterator.getNext());
+        assertEquals(25, iterator.next());
         assertFalse(iterator.hasNext());
     }
 }

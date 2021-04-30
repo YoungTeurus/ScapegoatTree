@@ -1,13 +1,11 @@
 package implementations;
 
 import interfaces.BinaryTree;
-import interfaces.TreeIterator;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Stack;
+import java.util.*;
 
-public class ScapegoatTree<T> implements BinaryTree<T> {
+public class ScapegoatTree<T extends Comparable<T>> implements BinaryTree<T> {
     static double DEFAULT_BALANCE_COEFFICIENT = 0.6667f;
 
     BinaryTreeNode<T> head;
@@ -108,53 +106,19 @@ public class ScapegoatTree<T> implements BinaryTree<T> {
         return result;
     }
 
-    private class ValuesArrayAndRootIndexCombo {
-        T[] values;
-        int indexOfRoot;
-    }
+    private void rebuildTree(){
+        int sizeOfTree = head.getSize();
 
-    private void rebuildTreeRootedAt(BinaryTreeNode<T> root){
-        ScapegoatTree<T> newTree = new ScapegoatTree<T>(balanceCoefficient);
+        T[] sortedValues = (T[]) new Object[sizeOfTree];
 
-        T valueOfRoot = root.getValue();
-        ValuesArrayAndRootIndexCombo sortedNodesAndIndexOfRoot = getArrayOfSortedValuesAndIndexOfValueInIt(valueOfRoot);
-
-        newTree.insertFromSortedArrayRootedAt(sortedNodesAndIndexOfRoot);
-
-        head = newTree.head;
-    }
-
-    private ValuesArrayAndRootIndexCombo getArrayOfSortedValuesAndIndexOfValueInIt(T value){
-        ValuesArrayAndRootIndexCombo valuesArrayAndRootIndexCombo = new ValuesArrayAndRootIndexCombo();
-
-        //noinspection unchecked
-        valuesArrayAndRootIndexCombo.values = (T[]) Array.newInstance(Object.class, currentNumberOfNodes);
-
-        TreeIterator<T> treeIterator = iterator();
-
-        int index = 0;
-        while(treeIterator.hasNext()){
-            T currentValue = treeIterator.getNext();
-            valuesArrayAndRootIndexCombo.values[index] = currentValue;
-            if(value.equals(currentValue)){
-                valuesArrayAndRootIndexCombo.indexOfRoot = index;
-            }
-            index++;
+        int i = 0;
+        for (T value : this) {
+            sortedValues[i++] = value;
         }
 
-        return valuesArrayAndRootIndexCombo;
-    }
+        head = null;
 
-    private void insertFromSortedArrayRootedAt(ValuesArrayAndRootIndexCombo sortedValuesArrayAndRootIndexCombo){
-        T[] sortedValues = sortedValuesArrayAndRootIndexCombo.values;
-        int indexOfRoot = sortedValuesArrayAndRootIndexCombo.indexOfRoot;
-
-        int sizeOfNodesList = sortedValues.length;
-
-        insert(sortedValues[indexOfRoot]);
-
-        insertFromSortedArray(sortedValues, 0, indexOfRoot - 1);
-        insertFromSortedArray(sortedValues, indexOfRoot + 1, sizeOfNodesList - 1);
+        insertFromSortedArray(sortedValues, 0, sizeOfTree - 1);
     }
 
     private void insertFromSortedArray(T[] sortedValues, int startIndex, int endIndex){
@@ -236,7 +200,7 @@ public class ScapegoatTree<T> implements BinaryTree<T> {
         return null;
     }
 
-    public TreeIterator<T> iterator() {
+    public Iterator<T> iterator() {
         return new BinaryTreeIterator<T>(head);
     }
 

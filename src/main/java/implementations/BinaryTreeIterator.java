@@ -1,15 +1,17 @@
 package implementations;
 
-import interfaces.TreeIterator;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.Iterator;
 import java.util.Stack;
+import java.util.function.Consumer;
 
-public class BinaryTreeIterator<T> implements TreeIterator<T> {
+public class BinaryTreeIterator<T extends Comparable<T>> implements Iterator<T> {
 
     Stack<BinaryTreeNode<T>> nodeStack;
 
     BinaryTreeIterator(BinaryTreeNode<T> treeTop){
-        nodeStack = new Stack<BinaryTreeNode<T>>();
+        nodeStack = new Stack<>();
 
         pushNodeAndLeftBranchToStack(treeTop);
     }
@@ -26,7 +28,7 @@ public class BinaryTreeIterator<T> implements TreeIterator<T> {
         }
     }
 
-    public T getNext() {
+    public T next() {
         BinaryTreeNode<T> nextNode = getNextNode();
         return nextNode.getValue();
     }
@@ -46,5 +48,9 @@ public class BinaryTreeIterator<T> implements TreeIterator<T> {
 
     public boolean hasNext() {
         return !(nodeStack.isEmpty());
+    }
+
+    public void remove() {
+        throw new NotImplementedException();
     }
 }
