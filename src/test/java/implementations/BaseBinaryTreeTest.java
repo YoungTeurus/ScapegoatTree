@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
 import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -185,5 +186,40 @@ class BaseBinaryTreeTest {
         }
 
         assertEquals(sum, iteratorSum);
+    }
+
+    @Test
+    void getSearchStackForValue(){
+        BaseBinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+
+        for (int i = 0; i < 10; i++) {
+            baseBinaryTree.insert(i);
+        }
+
+        Stack<BinaryTreeNode<Integer>> stack = baseBinaryTree.getSearchStackForValue(3);
+        assertEquals(4, stack.size());
+        stack = baseBinaryTree.getSearchStackForValue(-15);
+        assertEquals(1, stack.size());
+        stack = baseBinaryTree.getSearchStackForValue(0);
+        assertEquals(1, stack.size());
+    }
+
+    @Test
+    void contains(){
+        BaseBinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+
+        for (int i = 0; i < 10; i++) {
+            baseBinaryTree.insert(i);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            assertTrue(baseBinaryTree.contains(i));
+        }
+        for (int i = -99; i < 0; i++) {
+            assertFalse(baseBinaryTree.contains(i));
+        }
+        for (int i = 10; i < 100; i++) {
+            assertFalse(baseBinaryTree.contains(i));
+        }
     }
 }

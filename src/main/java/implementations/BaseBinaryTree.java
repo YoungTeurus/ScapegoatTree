@@ -2,6 +2,7 @@ package implementations;
 
 import interfaces.BinaryTree;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
@@ -16,6 +17,7 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         this.head = head;
     }
 
+    @Override
     public void insert(T value) {
         BinaryTreeNode<T> tempNode = new BinaryTreeNode<>(value);
         insert(tempNode);
@@ -31,35 +33,15 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         if (isEmpty()){
             head = nodeToInsert;
         } else {
-
-            // TODO: Разбить метод на подметоды! Или как-то вынести из if-else
-            // Базовый алгоритм вставки в бинарное дерево:
             T valueOfNodeToInsert = nodeToInsert.getValue();
-            T valueOfCurrentNode;
 
-            BinaryTreeNode<T> currentNode = head;
-
-            insertStack.push(currentNode);
-            while(true){
-                valueOfCurrentNode = currentNode.getValue();
-                if (valueOfNodeToInsert.compareTo(valueOfCurrentNode) <= 0){
-                    // LOWER:
-                    if(currentNode.hasLeft()){
-                        currentNode = currentNode.getLeft();
-                    } else{
-                        currentNode.setLeft(nodeToInsert);
-                        break;
-                    }
-                } else {
-                    // GREATER:
-                    if(currentNode.hasRight()){
-                        currentNode = currentNode.getRight();
-                    } else{
-                        currentNode.setRight(nodeToInsert);
-                        break;
-                    }
-                }
-                insertStack.push(currentNode);
+            insertStack = getSearchStackForValue(valueOfNodeToInsert);
+            BinaryTreeNode<T> nodeToAppend = insertStack.peek();
+            T valueOfNodeToAppend = nodeToAppend.getValue();
+            if(valueOfNodeToInsert.compareTo(valueOfNodeToAppend) <= 0){
+                nodeToAppend.setLeft(nodeToInsert);
+            } else {
+                nodeToAppend.setRight(nodeToInsert);
             }
         }
 
@@ -71,57 +53,77 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
 
     }
 
+    @Override
+    public boolean contains(T value) {
+        return findNodeByValue(value) != null;
+    }
+
+    @Override
     public void remove(T value) {
         BinaryTreeNode<T> nodeToRemove = findNodeByValue(value);
+        if(nodeToRemove == null){
+            return;
+        }
+
         throw new NotImplementedException();
     }
 
-    public BinaryTreeNode<T> findNodeByValue(T value) {
-        // Stack<BinaryTreeNode<T>> insertStack = new Stack<>();
-//
-        // if (isEmpty()){
-        //     head = nodeToInsert;
-        // } else {
-//
-        //     // Базовый алгоритм вставки в бинарное дерево:
-        //     BinaryTreeNode<T> currentNode = head;
-//
-        //     insertStack.push(currentNode);
-        //     while(true){
-        //         if(nodeToInsert.equals(currentNode)){
-        //             return;  // Текущая реализация НЕ ДОПУСКАЕТ наличия двух элементов с одинаковым значением!
-        //         } else if (nodeToInsert.lowerThan(currentNode)){
-        //             // LOWER:
-        //             if(currentNode.hasLeft()){
-        //                 currentNode = currentNode.getLeft();
-        //             } else{
-        //                 currentNode.setLeft(nodeToInsert);
-        //                 break;
-        //             }
-        //         } else {
-        //             // GREATER:
-        //             if(currentNode.hasRight()){
-        //                 currentNode = currentNode.getRight();
-        //             } else{
-        //                 currentNode.setRight(nodeToInsert);
-        //                 break;
-        //             }
-        //         }
-        //         insertStack.push(currentNode);
-        //     }
-        // }
+    @Override
+    public BinaryTreeNode<T> findNodeByValue(T valueToFind) {
+        Stack<BinaryTreeNode<T>> searchStack = getSearchStackForValue(valueToFind);
+        BinaryTreeNode<T> stackTop = searchStack.peek();
+        T valueOfStackTop = stackTop.getValue();
+
+        if(valueOfStackTop.equals(valueToFind)){
+            return stackTop;
+        }
         return null;
     }
 
-    private BinaryTreeNode<T> getNextNodeCloserToValue(@NotNull BinaryTreeNode<T> currentNode, T targetValue){
-        T valueOfCurrentNode = currentNode.getValue();
-        if(valueOfCurrentNode.compareTo(targetValue) > 0){
-            return currentNode.getRight();
-        } else {
-            return currentNode.getLeft();
+    // TODO: вернуть модификатор доступа private!
+
+    /**
+     * Метод осуществляет поиск элемента со значением valueToFind по дереву, ведя trace поиска.
+     * Если элемент был найден, он будет находится на вершине стека.
+     * Если элемент не был найден, на вершине стека будет тот элемент, в который можно вставить valueToFind.
+     * @param valueToFind Значение для поиска.
+     * @return Стек trace поиска.
+     */
+    Stack<BinaryTreeNode<T>> getSearchStackForValue(@NotNull T valueToFind){
+        Stack<BinaryTreeNode<T>> searchStack = new Stack<>();
+
+        if(isEmpty()){
+            return searchStack;
         }
+
+        BinaryTreeNode<T> currentNode = head;
+        T valueOfCurrentNode;
+
+        while(true){
+            searchStack.push(currentNode);
+            valueOfCurrentNode = currentNode.getValue();
+            if (valueToFind.compareTo(valueOfCurrentNode) == 0){
+                break;
+            } else if (valueToFind.compareTo(valueOfCurrentNode) < 0){
+                // LOWER:
+                if(currentNode.hasLeft()){
+                    currentNode = currentNode.getLeft();
+                } else{
+                    break;
+                }
+            } else {
+                // GREATER:
+                if(currentNode.hasRight()){
+                    currentNode = currentNode.getRight();
+                } else{
+                    break;
+                }
+            }
+        }
+        return searchStack;
     }
 
+    @Override
     public List<T> getValuesLowerThan(T value) {
         Vector<T> sortedValues = createVectorOfSortedValues();
 
@@ -146,6 +148,7 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         return sortedValues.subList(0, indexOfFirstNodeGreaterThanOrEqualsValue);
     }
 
+    @Override
     public List<T> getValuesGreaterThan(T value) {
         Vector<T> sortedValues = createVectorOfSortedValues();
 
@@ -170,7 +173,8 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         return sortedValues.subList(indexOfFirstNodeGreaterThanValue, sortedValues.size());
     }
 
-    public List<T> getValuesInRange(T from, T to) {
+    @Override
+    public List<T> getValuesInRange(@NotNull T from, @NotNull T to) {
         if(from.compareTo(to) > 0){  // from > to
             return Collections.emptyList();
         }
@@ -207,6 +211,7 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         return sortedValues.subList(indexOfFirstNodeLowerThanOrEqualsValue, indexOfFirstNodeGreaterThanOrEqualsValue);
     }
 
+    @Override
     public T findLowest() {
         Iterator<T> iterator = iterator();
         if(iterator.hasNext()){
@@ -215,6 +220,7 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         return null;
     }
 
+    @Override
     public T findGreatest() {
         BinaryTreeNode<T> theMostRightNode = getTheMostRightNode();
         if(theMostRightNode == null){
@@ -223,6 +229,7 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         return theMostRightNode.getValue();
     }
 
+    @Nullable
     private BinaryTreeNode<T> getTheMostRightNode(){
         if(isEmpty()){
             return null;
@@ -242,6 +249,7 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         return head.getSize();
     }
 
+    @Override
     public boolean isEmpty() {
         return head == null;
     }

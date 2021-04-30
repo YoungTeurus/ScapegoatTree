@@ -12,6 +12,7 @@ public interface BinaryTree<T extends Comparable<T>> extends Iterable<T> {
 
     void remove(T value);
 
+    boolean contains(T value);
     BinaryTreeNode<T> findNodeByValue(T value);
     List<T> getValuesLowerThan(T value);
     List<T> getValuesGreaterThan(T value);
