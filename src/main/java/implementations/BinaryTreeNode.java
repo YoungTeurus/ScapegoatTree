@@ -44,6 +44,16 @@ public class BinaryTreeNode<T extends Comparable<T>> implements TreeNode<T>, Com
         return right;
     }
 
+    class NodeWithParent{
+        BinaryTreeNode<T> parent;
+        BinaryTreeNode<T> node;
+
+        NodeWithParent(BinaryTreeNode<T> parent, BinaryTreeNode<T> node){
+            this.parent = parent;
+            this.node = node;
+        }
+    }
+
     BinaryTreeNode<T> getLowestFirstGreaterChild(){
         if(!hasRight()){
             throw new RuntimeException("BinaryTreeNode::getFirstGreaterChild: у node нет правого потомка!");
@@ -52,12 +62,36 @@ public class BinaryTreeNode<T extends Comparable<T>> implements TreeNode<T>, Com
         return rightChild.getNodeWithLowestValue();
     }
 
+    NodeWithParent getLowestFirstGreaterChildWithParent(){
+        if(!hasRight()){
+            throw new RuntimeException("BinaryTreeNode::getFirstGreaterChild: у node нет правого потомка!");
+        }
+        BinaryTreeNode<T> rightChild = getRight();
+        NodeWithParent nodeWithParent = rightChild.getNodeWithLowestValueAndItsParent();
+
+        // Если parent == null, значит сам rightChild является наименьшим.
+        if(nodeWithParent.parent == null){
+            nodeWithParent.parent = this;
+        }
+        return nodeWithParent;
+    }
+
     private BinaryTreeNode<T> getNodeWithLowestValue(){
         BinaryTreeNode<T> currentNode = this;
         while(currentNode.hasLeft()){
             currentNode = currentNode.getLeft();
         }
         return currentNode;
+    }
+
+    private NodeWithParent getNodeWithLowestValueAndItsParent(){
+        BinaryTreeNode<T> currentNode = this;
+        BinaryTreeNode<T> parent = null;
+        while(currentNode.hasLeft()){
+            parent = currentNode;
+            currentNode = currentNode.getLeft();
+        }
+        return new NodeWithParent(parent, currentNode);
     }
 
     public boolean hasLeft(){

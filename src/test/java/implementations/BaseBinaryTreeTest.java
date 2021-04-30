@@ -37,7 +37,7 @@ class BaseBinaryTreeTest {
 
     @Test
     void remove() {
-        BaseBinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
         Vector<Integer> addedElements = new Vector<>();
         Vector<Integer> removedElements = new Vector<>();
 
@@ -237,7 +237,7 @@ class BaseBinaryTreeTest {
 
     @Test
     void contains(){
-        BaseBinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
 
         for (int i = 0; i < 10; i++) {
             baseBinaryTree.insert(i);
