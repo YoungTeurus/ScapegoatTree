@@ -3,7 +3,7 @@ package implementations;
 import interfaces.TreeNode;
 import org.jetbrains.annotations.NotNull;
 
-public class BinaryTreeNode<T> implements TreeNode<T>, Comparable<BinaryTreeNode<T>> {
+public class BinaryTreeNode<T extends Comparable<T>> implements TreeNode<T>, Comparable<BinaryTreeNode<T>> {
     private T value;
     private BinaryTreeNode<T> left;
     private BinaryTreeNode<T> right;
@@ -30,21 +30,11 @@ public class BinaryTreeNode<T> implements TreeNode<T>, Comparable<BinaryTreeNode
     public int compareTo(@NotNull BinaryTreeNode<T> other){
         T otherValue = other.value;
 
-        if(!(value instanceof Comparable) || !(otherValue instanceof Comparable)){
+        if(value == null || otherValue == null){
             throw new RuntimeException("BinaryTreeNode::compare : Can't compare elements without realization of Comparable.");
         }
 
-        //noinspection unchecked
-        return ((Comparable<T>)value).compareTo(otherValue);
-    }
-    public boolean equals(BinaryTreeNode<T> other){
-        return compareTo(other) == 0;
-    }
-    public boolean lowerThan(BinaryTreeNode<T> other){
-        return compareTo(other) < 0;
-    }
-    public boolean greaterThan(BinaryTreeNode<T> other){
-        return compareTo(other) > 0;
+        return value.compareTo(otherValue);
     }
 
     public BinaryTreeNode<T> getLeft() {

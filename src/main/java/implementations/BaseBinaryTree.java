@@ -34,13 +34,15 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
 
             // TODO: Разбить метод на подметоды! Или как-то вынести из if-else
             // Базовый алгоритм вставки в бинарное дерево:
+            T valueOfNodeToInsert = nodeToInsert.getValue();
+            T valueOfCurrentNode;
+
             BinaryTreeNode<T> currentNode = head;
 
             insertStack.push(currentNode);
             while(true){
-                if(nodeToInsert.equals(currentNode)){
-                    return;  // Текущая реализация НЕ ДОПУСКАЕТ наличия двух элементов с одинаковым значением!
-                } else if (nodeToInsert.lowerThan(currentNode)){
+                valueOfCurrentNode = currentNode.getValue();
+                if (valueOfNodeToInsert.compareTo(valueOfCurrentNode) <= 0){
                     // LOWER:
                     if(currentNode.hasLeft()){
                         currentNode = currentNode.getLeft();
@@ -70,14 +72,57 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
     }
 
     public void remove(T value) {
+        BinaryTreeNode<T> nodeToRemove = findNodeByValue(value);
         throw new NotImplementedException();
     }
 
     public BinaryTreeNode<T> findNodeByValue(T value) {
+        // Stack<BinaryTreeNode<T>> insertStack = new Stack<>();
+//
+        // if (isEmpty()){
+        //     head = nodeToInsert;
+        // } else {
+//
+        //     // Базовый алгоритм вставки в бинарное дерево:
+        //     BinaryTreeNode<T> currentNode = head;
+//
+        //     insertStack.push(currentNode);
+        //     while(true){
+        //         if(nodeToInsert.equals(currentNode)){
+        //             return;  // Текущая реализация НЕ ДОПУСКАЕТ наличия двух элементов с одинаковым значением!
+        //         } else if (nodeToInsert.lowerThan(currentNode)){
+        //             // LOWER:
+        //             if(currentNode.hasLeft()){
+        //                 currentNode = currentNode.getLeft();
+        //             } else{
+        //                 currentNode.setLeft(nodeToInsert);
+        //                 break;
+        //             }
+        //         } else {
+        //             // GREATER:
+        //             if(currentNode.hasRight()){
+        //                 currentNode = currentNode.getRight();
+        //             } else{
+        //                 currentNode.setRight(nodeToInsert);
+        //                 break;
+        //             }
+        //         }
+        //         insertStack.push(currentNode);
+        //     }
+        // }
         return null;
     }
 
-    public List<T> findNodesLowerThan(T value) {
+    private BinaryTreeNode<T> getNextNodeCloserToValue(@NotNull BinaryTreeNode<T> currentNode, T targetValue){
+        T valueOfCurrentNode = currentNode.getValue();
+        if(valueOfCurrentNode.compareTo(targetValue) > 0){
+            return currentNode.getRight();
+        } else {
+            return currentNode.getLeft();
+        }
+    }
+
+    public List<T> getValuesLowerThan(T value) {
         Vector<T> sortedValues = createVectorOfSortedValues();
 
         // Быстрые проверки на граничные ситуации, чтобы сократить время работы.
@@ -101,7 +146,7 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         return sortedValues.subList(0, indexOfFirstNodeGreaterThanOrEqualsValue);
     }
 
-    public List<T> findNodesGreaterThan(T value) {
+    public List<T> getValuesGreaterThan(T value) {
         Vector<T> sortedValues = createVectorOfSortedValues();
 
         // Быстрые проверки на граничные ситуации, чтобы сократить время работы.
@@ -125,7 +170,7 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         return sortedValues.subList(indexOfFirstNodeGreaterThanValue, sortedValues.size());
     }
 
-    public List<T> findNodesInRange(T from, T to) {
+    public List<T> getValuesInRange(T from, T to) {
         if(from.compareTo(to) > 0){  // from > to
             return Collections.emptyList();
         }
