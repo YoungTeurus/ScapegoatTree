@@ -102,12 +102,13 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
                 head = leftChildOfNodeToRemove;
             }
         } else{
-            BinaryTreeNode<T> firstGreaterChildOfNodeToRemove = nodeToRemove.getLowestFirstGreaterChild();
-            T valueOfFirstGreaterChild = firstGreaterChildOfNodeToRemove.getValue();
+            BinaryTreeNode<T>.NodeWithParent firstGreaterChildOfNodeToRemoveWithParent =
+                    nodeToRemove.getLowestFirstGreaterChildWithParent();
+            BinaryTreeNode<T> firstGreaterChildNode = firstGreaterChildOfNodeToRemoveWithParent.node;
+            BinaryTreeNode<T> firstGreaterChildParentNode = firstGreaterChildOfNodeToRemoveWithParent.parent;
+            T valueOfFirstGreaterChild = firstGreaterChildNode.getValue();
 
-            // TODO: удалять по значению?! Это может быть медленно, так как происходит поиск по дереву!
-            //  (Вложенности не возникнет, так как удаляемый элемент не имеет левого поддерева.)
-            remove(valueOfFirstGreaterChild);
+            remove(firstGreaterChildParentNode, firstGreaterChildNode);
 
             nodeToRemove.setValue(valueOfFirstGreaterChild);
         }

@@ -3,7 +3,18 @@ package implementations;
 import interfaces.TreeNode;
 import org.jetbrains.annotations.NotNull;
 
+
 public class BinaryTreeNode<T extends Comparable<T>> implements TreeNode<T>, Comparable<BinaryTreeNode<T>> {
+    class NodeWithParent{
+        BinaryTreeNode<T> parent;
+        BinaryTreeNode<T> node;
+
+        NodeWithParent(BinaryTreeNode<T> parent, BinaryTreeNode<T> node){
+            this.parent = parent;
+            this.node = node;
+        }
+    }
+
     private T value;
     private BinaryTreeNode<T> left;
     private BinaryTreeNode<T> right;
@@ -44,24 +55,6 @@ public class BinaryTreeNode<T extends Comparable<T>> implements TreeNode<T>, Com
         return right;
     }
 
-    class NodeWithParent{
-        BinaryTreeNode<T> parent;
-        BinaryTreeNode<T> node;
-
-        NodeWithParent(BinaryTreeNode<T> parent, BinaryTreeNode<T> node){
-            this.parent = parent;
-            this.node = node;
-        }
-    }
-
-    BinaryTreeNode<T> getLowestFirstGreaterChild(){
-        if(!hasRight()){
-            throw new RuntimeException("BinaryTreeNode::getFirstGreaterChild: у node нет правого потомка!");
-        }
-        BinaryTreeNode<T> rightChild = getRight();
-        return rightChild.getNodeWithLowestValue();
-    }
-
     NodeWithParent getLowestFirstGreaterChildWithParent(){
         if(!hasRight()){
             throw new RuntimeException("BinaryTreeNode::getFirstGreaterChild: у node нет правого потомка!");
@@ -74,14 +67,6 @@ public class BinaryTreeNode<T extends Comparable<T>> implements TreeNode<T>, Com
             nodeWithParent.parent = this;
         }
         return nodeWithParent;
-    }
-
-    private BinaryTreeNode<T> getNodeWithLowestValue(){
-        BinaryTreeNode<T> currentNode = this;
-        while(currentNode.hasLeft()){
-            currentNode = currentNode.getLeft();
-        }
-        return currentNode;
     }
 
     private NodeWithParent getNodeWithLowestValueAndItsParent(){
