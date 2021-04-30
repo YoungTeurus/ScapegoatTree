@@ -1,6 +1,7 @@
 package implementations;
 
 import interfaces.TreeNode;
+import org.jetbrains.annotations.NotNull;
 
 public class BinaryTreeNode<T> implements TreeNode<T>, Comparable<BinaryTreeNode<T>> {
     private T value;
@@ -26,7 +27,7 @@ public class BinaryTreeNode<T> implements TreeNode<T>, Comparable<BinaryTreeNode
     }
 
 
-    public int compareTo(BinaryTreeNode<T> other){
+    public int compareTo(@NotNull BinaryTreeNode<T> other){
         T otherValue = other.value;
 
         if(!(value instanceof Comparable) || !(otherValue instanceof Comparable)){
@@ -70,6 +71,15 @@ public class BinaryTreeNode<T> implements TreeNode<T>, Comparable<BinaryTreeNode
     public BinaryTreeNode<T> setRight(BinaryTreeNode<T> node) {
         right = node;
         return this;
+    }
+    void replaceChild(BinaryTreeNode<T> oldChild, BinaryTreeNode<T> newChild){
+        if(left == oldChild){
+            setLeft(newChild);
+        } else if (right == oldChild){
+            setRight(newChild);
+        } else{
+            throw new RuntimeException("BinaryTreeNode::replaceChild: oldChild isn't present in node's childs!");
+        }
     }
 
     public T getValue() {
