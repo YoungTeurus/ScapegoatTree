@@ -34,7 +34,7 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         } else {
             T valueOfNodeToInsert = nodeToInsert.getValue();
 
-            insertStack = getSearchStackForValue(valueOfNodeToInsert);
+            insertStack = getInsertStackForValue(valueOfNodeToInsert);
             BinaryTreeNode<T> nodeToAppend = insertStack.peek();
             T valueOfNodeToAppend = nodeToAppend.getValue();
             if(valueOfNodeToInsert.compareTo(valueOfNodeToAppend) <= 0){
@@ -133,6 +133,14 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         return null;
     }
 
+    Stack<BinaryTreeNode<T>> getInsertStackForValue(@NotNull T valueToInsert){
+        return getSearchStackForValue(valueToInsert, false);
+    }
+
+    Stack<BinaryTreeNode<T>> getSearchStackForValue(@NotNull T valueToFind){
+        return getSearchStackForValue(valueToFind, true);
+    }
+
     /**
      * Метод осуществляет поиск элемента со значением valueToFind по дереву, ведя trace поиска.
      * Если элемент был найден, он будет находится на вершине стека.
@@ -141,7 +149,7 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
      * @return Стек trace поиска.
      */
     // TODO: вернуть модификатор доступа private!
-    Stack<BinaryTreeNode<T>> getSearchStackForValue(@NotNull T valueToFind){
+    Stack<BinaryTreeNode<T>> getSearchStackForValue(@NotNull T valueToFind, boolean allowReturningEqual){
         Stack<BinaryTreeNode<T>> searchStack = new Stack<>();
 
         if(isEmpty()){
@@ -154,9 +162,9 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         while(true){
             searchStack.push(currentNode);
             valueOfCurrentNode = currentNode.getValue();
-            if (valueToFind.compareTo(valueOfCurrentNode) == 0){
+            if (allowReturningEqual && valueToFind.compareTo(valueOfCurrentNode) == 0){
                 break;
-            } else if (valueToFind.compareTo(valueOfCurrentNode) < 0){
+            } else if (valueToFind.compareTo(valueOfCurrentNode) <= 0){
                 // LOWER:
                 if(currentNode.hasLeft()){
                     currentNode = currentNode.getLeft();

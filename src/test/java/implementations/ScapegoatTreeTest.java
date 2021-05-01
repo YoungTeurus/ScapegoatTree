@@ -60,7 +60,6 @@ class ScapegoatTreeTest {
                 }
             }
         }
-        int a = 5;
     }
 
     @Test

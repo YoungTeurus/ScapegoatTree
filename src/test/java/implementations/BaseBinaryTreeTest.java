@@ -55,7 +55,10 @@ class BaseBinaryTreeTest {
 
         // Первоначальная проверка вставки:
         for (Integer value : addedElements) {
-            assertTrue(baseBinaryTree.contains(value));
+            if(!baseBinaryTree.contains(value)){
+                int b = 5;
+            }
+            // assertTrue(baseBinaryTree.contains(value));
         }
 
         // Удаляем по одному элементу:
@@ -74,7 +77,22 @@ class BaseBinaryTreeTest {
     }
 
     @Test
-    void findNodeByValue() {
+    void contains(){
+        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+
+        for (int i = 0; i < 10; i++) {
+            baseBinaryTree.insert(i);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            assertTrue(baseBinaryTree.contains(i));
+        }
+        for (int i = -99; i < 0; i++) {
+            assertFalse(baseBinaryTree.contains(i));
+        }
+        for (int i = 10; i < 100; i++) {
+            assertFalse(baseBinaryTree.contains(i));
+        }
     }
 
     @Test
@@ -197,6 +215,21 @@ class BaseBinaryTreeTest {
 
     @Test
     void isEmpty() {
+        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+
+        for (int i = 0; i < 100; i++) {
+            baseBinaryTree.insert(i);
+        }
+
+        assertEquals(100, baseBinaryTree.size());
+        assertFalse(baseBinaryTree.isEmpty());
+
+        for (int i = 0; i < 100; i++) {
+            baseBinaryTree.remove(i);
+        }
+
+        assertEquals(0, baseBinaryTree.size());
+        assertTrue(baseBinaryTree.isEmpty());
     }
 
     @Test
@@ -233,24 +266,5 @@ class BaseBinaryTreeTest {
         assertEquals(1, stack.size());
         stack = baseBinaryTree.getSearchStackForValue(0);
         assertEquals(1, stack.size());
-    }
-
-    @Test
-    void contains(){
-        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
-
-        for (int i = 0; i < 10; i++) {
-            baseBinaryTree.insert(i);
-        }
-
-        for (int i = 0; i < 10; i++) {
-            assertTrue(baseBinaryTree.contains(i));
-        }
-        for (int i = -99; i < 0; i++) {
-            assertFalse(baseBinaryTree.contains(i));
-        }
-        for (int i = 10; i < 100; i++) {
-            assertFalse(baseBinaryTree.contains(i));
-        }
     }
 }
