@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>implementations.treeCreators</OriginalElement>
+  <nodes>
+    <node x="0.0" y="1066.0">implementations.BinaryTreeIterator</node>
+    <node x="306.0" y="992.0">implementations.treeCreators.IntegerBaseBinaryTreeCreatorFromFile</node>
+    <node x="400.0" y="0.0">interfaces.TreeNode</node>
+    <node x="626.0" y="992.0">implementations.treeCreators.IntegerScapegoatTreeCreatorFromFile</node>
+    <node x="1207.0" y="913.0">implementations.treeCreators.StringToIntegerParser</node>
+    <node x="10.5" y="913.0">implementations.treeCreators.StringBinaryTreeCreatorFromFile</node>
+    <node x="0.0" y="992.0">implementations.treeCreators.StringScapegoatTreeCreatorFromFile</node>
+    <node x="21.5" y="0.0">interfaces.BinaryTree</node>
+    <node x="309.0" y="147.0">implementations.BinaryTreeNode</node>
+    <node x="62.5" y="712.0">implementations.ScapegoatTree</node>
+    <node x="478.24999999999994" y="913.0">implementations.treeCreators.IntegerBinaryTreeCreatorFromFile</node>
+    <node x="1099.5" y="810.0">interfaces.treeCreators.StringParser</node>
+    <node x="964.0" y="913.0">implementations.treeCreators.StringToStringParser</node>
+    <node x="289.75" y="810.0">interfaces.treeCreators.BinaryTreeCreatorFromFile</node>
+    <node x="0.0" y="323.0">implementations.BaseBinaryTree</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="implementations.treeCreators.StringBinaryTreeCreatorFromFile" target="interfaces.treeCreators.BinaryTreeCreatorFromFile">
+      <point x="0.0" y="-14.5" />
+      <point x="143.0" y="888.0" />
+      <point x="356.75" y="888.0" />
+      <point x="-67.0" y="26.5" />
+    </edge>
+    <edge source="implementations.treeCreators.StringScapegoatTreeCreatorFromFile" target="implementations.treeCreators.StringBinaryTreeCreatorFromFile">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="implementations.treeCreators.IntegerBaseBinaryTreeCreatorFromFile" target="implementations.treeCreators.IntegerBinaryTreeCreatorFromFile">
+      <point x="0.0" y="-14.5" />
+      <point x="456.0" y="967.0" />
+      <point x="546.25" y="967.0" />
+      <point x="-68.0" y="14.5" />
+    </edge>
+    <edge source="implementations.BinaryTreeNode" target="interfaces.TreeNode">
+      <point x="0.0" y="-147.5" />
+      <point x="0.0" y="48.5" />
+    </edge>
+    <edge source="implementations.treeCreators.StringToStringParser" target="interfaces.treeCreators.StringParser">
+      <point x="0.0" y="-26.5" />
+      <point x="1075.5" y="888.0" />
+      <point x="1149.0" y="888.0" />
+      <point x="-49.5" y="26.5" />
+    </edge>
+    <edge source="implementations.ScapegoatTree" target="implementations.BaseBinaryTree">
+      <point x="0.0" y="-26.5" />
+      <point x="0.0" y="169.5" />
+    </edge>
+    <edge source="implementations.BaseBinaryTree" target="interfaces.BinaryTree">
+      <point x="0.0" y="-169.5" />
+      <point x="0.0" y="136.5" />
+    </edge>
+    <edge source="implementations.treeCreators.IntegerBinaryTreeCreatorFromFile" target="interfaces.treeCreators.BinaryTreeCreatorFromFile">
+      <point x="0.0" y="-14.5" />
+      <point x="614.25" y="888.0" />
+      <point x="490.74999999999994" y="888.0" />
+      <point x="66.99999999999994" y="26.5" />
+    </edge>
+    <edge source="implementations.treeCreators.IntegerScapegoatTreeCreatorFromFile" target="implementations.treeCreators.IntegerBinaryTreeCreatorFromFile">
+      <point x="0.0" y="-14.5" />
+      <point x="772.5" y="967.0" />
+      <point x="682.25" y="967.0" />
+      <point x="68.0" y="14.5" />
+    </edge>
+    <edge source="implementations.treeCreators.StringToIntegerParser" target="interfaces.treeCreators.StringParser">
+      <point x="0.0" y="-26.5" />
+      <point x="1321.5" y="888.0" />
+      <point x="1248.0" y="888.0" />
+      <point x="49.5" y="26.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6082840236686391" x="651.0835228443102" y="560.7500629731338" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

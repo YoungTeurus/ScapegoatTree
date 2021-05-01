@@ -145,10 +145,12 @@ public class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
      * Если элемент был найден, он будет находится на вершине стека.
      * Если элемент не был найден, на вершине стека будет тот элемент, в который можно вставить valueToFind.
      * @param valueToFind Значение для поиска.
+     * @param allowReturningEqual Если false, проверка на точное совпадение элемента не будет производиться.
+     *                            Необходимо для insert().
      * @return Стек trace поиска.
      */
     // TODO: вернуть модификатор доступа private!
-    Stack<BinaryTreeNode<T>> getSearchStackForValue(@NotNull T valueToFind, boolean allowReturningEqual){
+    private Stack<BinaryTreeNode<T>> getSearchStackForValue(@NotNull T valueToFind, boolean allowReturningEqual){
         Stack<BinaryTreeNode<T>> searchStack = new Stack<>();
 
         if(isEmpty()){
