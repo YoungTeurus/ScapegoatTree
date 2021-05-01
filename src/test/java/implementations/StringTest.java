@@ -91,6 +91,7 @@ public class StringTest {
         }
     }
 
+    @SuppressWarnings({"unused", "UnusedAssignment"})
     @Test
     void getValuesLowerThan() {
         BinaryTree<String> scapegoatTree = new ScapegoatTree<>();
@@ -109,6 +110,7 @@ public class StringTest {
 
     }
 
+    @SuppressWarnings({"unused", "UnusedAssignment"})
     @Test
     void getValuesGreaterThan() {
         BinaryTree<String> scapegoatTree = new ScapegoatTree<>();
@@ -126,6 +128,7 @@ public class StringTest {
         greaterValues = scapegoatTree.getValuesGreaterThan(Integer.toString(200));
     }
 
+    @SuppressWarnings({"unused", "UnusedAssignment"})
     @Test
     void getValuesInRange() {
         BinaryTree<String> scapegoatTree = new ScapegoatTree<>();
@@ -149,6 +152,7 @@ public class StringTest {
         rangeValues = scapegoatTree.getValuesInRange(Integer.toString(10), Integer.toString(10));
     }
 
+    @SuppressWarnings("unused")
     @Test
     void findLowest() {
         BinaryTree<String> scapegoatTree = new ScapegoatTree<>();
@@ -164,6 +168,7 @@ public class StringTest {
         String lowest = scapegoatTree.findLowest();
     }
 
+    @SuppressWarnings("unused")
     @Test
     void findGreatest() {
         BinaryTree<String> scapegoatTree = new ScapegoatTree<>();
