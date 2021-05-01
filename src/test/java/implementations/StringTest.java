@@ -93,122 +93,89 @@ public class StringTest {
 
     @Test
     void getValuesLowerThan() {
-        BinaryTree<String> scapegoatTree = new ScapegoatTree<>(0.8);
+        BinaryTree<String> scapegoatTree = new ScapegoatTree<>();
 
         for (int i = 0; i < 100; i++) {
             scapegoatTree.insert(Integer.toString(i));
         }
 
         List<String> lowerValues = scapegoatTree.getValuesLowerThan(Integer.toString(20));
-        // assertEquals(20, lowerValues.size());
 
         lowerValues = scapegoatTree.getValuesLowerThan(Integer.toString(120));
-        // assertEquals(100, lowerValues.size());
 
         lowerValues = scapegoatTree.getValuesLowerThan(Integer.toString(0));
-        // assertEquals(0, lowerValues.size());
 
         lowerValues = scapegoatTree.getValuesLowerThan(Integer.toString(-100));
-        // assertEquals(0, lowerValues.size());
 
-        int b = 5;
     }
 
     @Test
     void getValuesGreaterThan() {
-        BinaryTree<Integer> scapegoatTree = new ScapegoatTree<>();
+        BinaryTree<String> scapegoatTree = new ScapegoatTree<>();
 
         for (int i = 0; i < 100; i++) {
-            scapegoatTree.insert(i);
+            scapegoatTree.insert(Integer.toString(i));
         }
 
-        List<Integer> greaterValues = scapegoatTree.getValuesGreaterThan(80);
-        assertEquals(19, greaterValues.size());
+        List<String> greaterValues = scapegoatTree.getValuesGreaterThan(Integer.toString(80));
 
-        greaterValues = scapegoatTree.getValuesGreaterThan(-1);
-        assertEquals(100, greaterValues.size());
+        greaterValues = scapegoatTree.getValuesGreaterThan(Integer.toString(-1));
 
-        greaterValues = scapegoatTree.getValuesGreaterThan(99);
-        assertEquals(0, greaterValues.size());
+        greaterValues = scapegoatTree.getValuesGreaterThan(Integer.toString(99));
 
-        greaterValues = scapegoatTree.getValuesGreaterThan(200);
-        assertEquals(0, greaterValues.size());
+        greaterValues = scapegoatTree.getValuesGreaterThan(Integer.toString(200));
     }
 
     @Test
     void getValuesInRange() {
-        BinaryTree<Integer> scapegoatTree = new ScapegoatTree<>();
+        BinaryTree<String> scapegoatTree = new ScapegoatTree<>();
 
         for (int i = 0; i < 100; i++) {
-            scapegoatTree.insert(i);
+            scapegoatTree.insert(Integer.toString(i));
         }
 
-        List<Integer> rangeValues = scapegoatTree.getValuesInRange(30, 60);
-        assertEquals(31, rangeValues.size());
+        List<String> rangeValues = scapegoatTree.getValuesInRange(Integer.toString(30), Integer.toString(60));
 
-        rangeValues = scapegoatTree.getValuesInRange(0, 99);
-        assertEquals(100, rangeValues.size());
+        rangeValues = scapegoatTree.getValuesInRange(Integer.toString(0), Integer.toString(99));
 
-        rangeValues = scapegoatTree.getValuesInRange(-100, 200);
-        assertEquals(100, rangeValues.size());
+        rangeValues = scapegoatTree.getValuesInRange(Integer.toString(-100), Integer.toString(200));
 
-        rangeValues = scapegoatTree.getValuesInRange(150, 200);
-        assertEquals(0, rangeValues.size());
+        rangeValues = scapegoatTree.getValuesInRange(Integer.toString(150), Integer.toString(200));
 
-        rangeValues = scapegoatTree.getValuesInRange(-50, -20);
-        assertEquals(0, rangeValues.size());
+        rangeValues = scapegoatTree.getValuesInRange(Integer.toString(-50), Integer.toString(-20));
 
-        rangeValues = scapegoatTree.getValuesInRange(99, 0);
-        assertEquals(0, rangeValues.size());
+        rangeValues = scapegoatTree.getValuesInRange(Integer.toString(99), Integer.toString(0));
 
-        rangeValues = scapegoatTree.getValuesInRange(10, 10);
-        assertEquals(1, rangeValues.size());
+        rangeValues = scapegoatTree.getValuesInRange(Integer.toString(10), Integer.toString(10));
     }
 
     @Test
     void findLowest() {
-        // TODO: ловится ошибка!!!
-        BinaryTree<Integer> scapegoatTree = new ScapegoatTree<>();
-        Integer theMinimalValue = -100;
-
-        // Заполняем вектор значениями больше -100, причём -100 стоит посередине.
-        Vector<Integer> randomValues = new Vector<>(100);
+        BinaryTree<String> scapegoatTree = new ScapegoatTree<>();
 
         for(int i = 0; i < 100; i++){
-            if (i == 50){
-                randomValues.add(theMinimalValue);
-                continue;
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int j = 0; j < 10; j++) {
+                stringBuilder.append(random.nextInt(10));
             }
-            randomValues.add(theMinimalValue + 1 + Math.abs(random.nextInt()) % 200);
+            scapegoatTree.insert(stringBuilder.toString());
         }
 
-        for (Integer value : randomValues) {
-            scapegoatTree.insert(value);
-        }
-
-        assertEquals(theMinimalValue, scapegoatTree.findLowest());
+        String lowest = scapegoatTree.findLowest();
     }
 
     @Test
     void findGreatest() {
-        BinaryTree<Integer> scapegoatTree = new ScapegoatTree<>();
-        Integer theMaximumNumber = 100;
-
-        // Заполняем вектор значениями больше -100, причём -100 стоит посередине.
-        Vector<Integer> randomValues = new Vector<>(100);
+        BinaryTree<String> scapegoatTree = new ScapegoatTree<>();
 
         for(int i = 0; i < 100; i++){
-            if (i == 50){
-                randomValues.add(theMaximumNumber);
-                continue;
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int j = 0; j < 10; j++) {
+                stringBuilder.append(random.nextInt(10));
             }
-            randomValues.add(theMaximumNumber - 1 - Math.abs(random.nextInt()) % 200);
+            scapegoatTree.insert(stringBuilder.toString());
         }
 
-        for (Integer value : randomValues) {
-            scapegoatTree.insert(value);
-        }
-
-        assertEquals(theMaximumNumber, scapegoatTree.findGreatest());
+        String greatest = scapegoatTree.findGreatest();
     }
 }

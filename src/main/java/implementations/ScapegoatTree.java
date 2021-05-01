@@ -70,10 +70,12 @@ public class ScapegoatTree<T extends Comparable<T>> extends BaseBinaryTree<T> {
             criticalScapegoatSize = balanceCoefficient * currentScapegoatParentSize;
         }
 
+        // Будем балансировать не сам найденный scapegoat, а его родителя (он также подходит под условие scapegoat).
+        // Если это не сделать, мы никогда не будем менять head дерева, даже когда это нужно.
         currentScapegoat = insertStack.pop();
-        try {
+        if(insertStack.size() > 0){
             currentScapegoatParent = insertStack.peek();
-        } catch (Exception e){
+        } else{
             currentScapegoatParent = null;
         }
 

@@ -168,7 +168,6 @@ class ScapegoatTreeTest {
 
     @Test
     void findLowest() {
-        // TODO: ловится ошибка!!!
         BinaryTree<Integer> scapegoatTree = new ScapegoatTree<>();
         Integer theMinimalValue = -100;
 
