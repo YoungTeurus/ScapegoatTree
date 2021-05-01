@@ -1,5 +1,5 @@
 package interfaces.treeCreators;
 
-public interface StringParser {
-    Comparable parseStringToValue(String string);
+public interface StringParser<T> {
+    T parseStringToValue(String string);
 }

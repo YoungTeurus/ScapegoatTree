@@ -2,9 +2,9 @@ package implementations.treeCreators;
 
 import interfaces.treeCreators.StringParser;
 
-public class StringToStringParser implements StringParser {
+public class StringToStringParser implements StringParser<String> {
     @Override
-    public Comparable parseStringToValue(String string) {
+    public String parseStringToValue(String string) {
         return string;
     }
 }

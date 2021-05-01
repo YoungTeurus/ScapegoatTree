@@ -2,9 +2,9 @@ package implementations.treeCreators;
 
 import interfaces.treeCreators.StringParser;
 
-public class StringToIntegerParser implements StringParser {
+public class StringToIntegerParser implements StringParser<Integer> {
     @Override
-    public Comparable parseStringToValue(String string) {
+    public Integer parseStringToValue(String string) {
         try {
             return Integer.valueOf(string);
         } catch (NumberFormatException e){
