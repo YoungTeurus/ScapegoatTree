@@ -14,6 +14,7 @@ public class ScapegoatTree<T extends Comparable<T>> extends BaseBinaryTree<T> {
     }
     ScapegoatTree(BinaryTreeNode<T> head){
         super(head);
+        maxNumberOfNodes = currentNumberOfNodes = head.getSize();
     }
     ScapegoatTree(double balanceCoefficient){
         super();
@@ -22,6 +23,7 @@ public class ScapegoatTree<T extends Comparable<T>> extends BaseBinaryTree<T> {
     ScapegoatTree(double balanceCoefficient, BinaryTreeNode<T> head){
         super(head);
         this.balanceCoefficient = balanceCoefficient;
+        maxNumberOfNodes = currentNumberOfNodes = head.getSize();
     }
 
     @Override
@@ -85,5 +87,10 @@ public class ScapegoatTree<T extends Comparable<T>> extends BaseBinaryTree<T> {
         if(currentNumberOfNodes <= criticalNumberOfNodes){
             rebalance();
         }
+    }
+
+    @Override
+    public int size() {
+        return currentNumberOfNodes;
     }
 }

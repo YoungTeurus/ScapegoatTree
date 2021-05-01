@@ -74,6 +74,8 @@ class BaseBinaryTreeTest {
                 }
             }
         }
+
+        assertEquals(900, baseBinaryTree.size());
     }
 
     @Test
@@ -96,7 +98,7 @@ class BaseBinaryTreeTest {
     }
 
     @Test
-    void findNodesLowerThan() {
+    void getValuesLowerThan() {
         BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
 
         for (int i = 0; i < 100; i++) {
@@ -117,7 +119,7 @@ class BaseBinaryTreeTest {
     }
 
     @Test
-    void findNodesGreaterThan() {
+    void getValuesGreaterThan() {
         BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
 
         for (int i = 0; i < 100; i++) {
@@ -138,7 +140,7 @@ class BaseBinaryTreeTest {
     }
 
     @Test
-    void findNodesInRange() {
+    void getValuesInRange() {
         BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
 
         for (int i = 0; i < 100; i++) {

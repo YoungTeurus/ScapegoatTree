@@ -123,7 +123,6 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         return valueOfStackTop.equals(value);
     }
 
-    @Override
     public BinaryTreeNode<T> findNodeByValue(T valueToFind) {
         Stack<BinaryTreeNode<T>> searchStack = getSearchStackForValue(valueToFind);
 

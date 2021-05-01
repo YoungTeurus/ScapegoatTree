@@ -8,17 +8,21 @@ import java.util.Random;
 import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-class ScapegoatTreeTest {
-
+public class StringTest {
     Random random = new Random();
 
     @Test
     void insert() {
-        BinaryTree<Integer> scapegoatTree = new ScapegoatTree<>();
+        BinaryTree<String> scapegoatTree = new ScapegoatTree<>();
 
         for (int i = 0; i < 100; i++) {
-            scapegoatTree.insert(random.nextInt());
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int j = 0; j < 10; j++) {
+                stringBuilder.append(random.nextInt(10));
+            }
+            scapegoatTree.insert(stringBuilder.toString());
         }
 
         assertEquals(100, scapegoatTree.size());
@@ -26,33 +30,37 @@ class ScapegoatTreeTest {
 
     @Test
     void remove() {
-        BinaryTree<Integer> scapegoatTree = new ScapegoatTree<>();
-        Vector<Integer> addedElements = new Vector<>();
-        Vector<Integer> removedElements = new Vector<>();
+        BinaryTree<String> scapegoatTree = new ScapegoatTree<>();
+        Vector<String> addedElements = new Vector<>();
+        Vector<String> removedElements = new Vector<>();
 
         while(addedElements.size() < 1000){
-            int generatedValue = Math.abs(random.nextInt()) % 20001 - 10000;
-            if(addedElements.contains(generatedValue)){
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int j = 0; j < 10; j++) {
+                stringBuilder.append(random.nextInt(10));
+            }
+            String generatedString = stringBuilder.toString();
+            if(addedElements.contains(generatedString)){
                 continue;
             }
-            addedElements.add(generatedValue);
+            addedElements.add(generatedString);
         }
 
-        for (Integer value : addedElements) {
+        for (String value : addedElements) {
             scapegoatTree.insert(value);
         }
 
         // Первоначальная проверка вставки:
-        for (Integer value : addedElements) {
+        for (String value : addedElements) {
             assertTrue(scapegoatTree.contains(value));
         }
 
         // Удаляем по одному элементу:
         for(int i = 0; i < 100; i++){
-            Integer valueToRemove = addedElements.get(i);
+            String valueToRemove = addedElements.get(i);
             removedElements.add(valueToRemove);
             scapegoatTree.remove(valueToRemove);
-            for (Integer value : addedElements) {
+            for (String value : addedElements) {
                 if(removedElements.contains(value)){
                     assertFalse(scapegoatTree.contains(value));
                 } else {
@@ -66,42 +74,44 @@ class ScapegoatTreeTest {
 
     @Test
     void contains(){
-        BinaryTree<Integer> scapegoatTree = new ScapegoatTree<>();
+        BinaryTree<String> scapegoatTree = new ScapegoatTree<>();
 
         for (int i = 0; i < 10; i++) {
-            scapegoatTree.insert(i);
+            scapegoatTree.insert(Integer.toString(i));
         }
 
         for (int i = 0; i < 10; i++) {
-            assertTrue(scapegoatTree.contains(i));
+            assertTrue(scapegoatTree.contains(Integer.toString(i)));
         }
         for (int i = -99; i < 0; i++) {
-            assertFalse(scapegoatTree.contains(i));
+            assertFalse(scapegoatTree.contains(Integer.toString(i)));
         }
         for (int i = 10; i < 100; i++) {
-            assertFalse(scapegoatTree.contains(i));
+            assertFalse(scapegoatTree.contains(Integer.toString(i)));
         }
     }
 
     @Test
     void getValuesLowerThan() {
-        BinaryTree<Integer> scapegoatTree = new ScapegoatTree<>(0.5);
+        BinaryTree<String> scapegoatTree = new ScapegoatTree<>(0.8);
 
         for (int i = 0; i < 100; i++) {
-            scapegoatTree.insert(i);
+            scapegoatTree.insert(Integer.toString(i));
         }
 
-        List<Integer> lowerValues = scapegoatTree.getValuesLowerThan(20);
-        assertEquals(20, lowerValues.size());
+        List<String> lowerValues = scapegoatTree.getValuesLowerThan(Integer.toString(20));
+        // assertEquals(20, lowerValues.size());
 
-        lowerValues = scapegoatTree.getValuesLowerThan(120);
-        assertEquals(100, lowerValues.size());
+        lowerValues = scapegoatTree.getValuesLowerThan(Integer.toString(120));
+        // assertEquals(100, lowerValues.size());
 
-        lowerValues = scapegoatTree.getValuesLowerThan(0);
-        assertEquals(0, lowerValues.size());
+        lowerValues = scapegoatTree.getValuesLowerThan(Integer.toString(0));
+        // assertEquals(0, lowerValues.size());
 
-        lowerValues = scapegoatTree.getValuesLowerThan(-100);
-        assertEquals(0, lowerValues.size());
+        lowerValues = scapegoatTree.getValuesLowerThan(Integer.toString(-100));
+        // assertEquals(0, lowerValues.size());
+
+        int b = 5;
     }
 
     @Test
@@ -200,25 +210,5 @@ class ScapegoatTreeTest {
         }
 
         assertEquals(theMaximumNumber, scapegoatTree.findGreatest());
-    }
-
-    @Test
-    void iterator() {
-        // Подсчитаем сумму элементов:
-        BinaryTree<Integer> scapegoatTree = new ScapegoatTree<>();
-        int sum = 0;
-        int iteratorSum = 0;
-
-        for (int i = 0; i < 100; i++) {
-            scapegoatTree.insert(i);
-            sum += i;
-        }
-
-        for (Integer value :
-                scapegoatTree) {
-            iteratorSum += value;
-        }
-
-        assertEquals(sum, iteratorSum);
     }
 }
