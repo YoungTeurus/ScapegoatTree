@@ -9,18 +9,18 @@ public class ScapegoatTree<T extends Comparable<T>> extends BaseBinaryTree<T> {
     int maxNumberOfNodes = 0;
     int currentNumberOfNodes = 0;
 
-    ScapegoatTree(){
+    public ScapegoatTree(){
         super();
     }
-    ScapegoatTree(BinaryTreeNode<T> head){
+    public ScapegoatTree(BinaryTreeNode<T> head){
         super(head);
         maxNumberOfNodes = currentNumberOfNodes = head.getSize();
     }
-    ScapegoatTree(double balanceCoefficient){
+    public ScapegoatTree(double balanceCoefficient){
         super();
         checkAndSetBalanceCoefficient(balanceCoefficient);
     }
-    ScapegoatTree(double balanceCoefficient, BinaryTreeNode<T> head){
+    public ScapegoatTree(double balanceCoefficient, BinaryTreeNode<T> head){
         super(head);
         checkAndSetBalanceCoefficient(balanceCoefficient);
         maxNumberOfNodes = currentNumberOfNodes = head.getSize();

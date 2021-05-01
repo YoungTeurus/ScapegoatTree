@@ -6,13 +6,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
+public class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
     protected BinaryTreeNode<T> head;
 
-    BaseBinaryTree(){
+    public BaseBinaryTree(){
         head = null;
     }
-    BaseBinaryTree(BinaryTreeNode<T> head){
+    public BaseBinaryTree(BinaryTreeNode<T> head){
         this.head = head;
     }
 
@@ -350,5 +350,15 @@ class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
 
         insertFromSortedVector(sortedValues, startIndex, centerIndex - 1);
         insertFromSortedVector(sortedValues, centerIndex + 1, endIndex);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (T value :
+                this) {
+            stringBuilder.append(value.toString()).append(" ");
+        }
+        return stringBuilder.toString();
     }
 }
