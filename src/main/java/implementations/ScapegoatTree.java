@@ -18,12 +18,19 @@ public class ScapegoatTree<T extends Comparable<T>> extends BaseBinaryTree<T> {
     }
     ScapegoatTree(double balanceCoefficient){
         super();
-        this.balanceCoefficient = balanceCoefficient;
+        checkAndSetBalanceCoefficient(balanceCoefficient);
     }
     ScapegoatTree(double balanceCoefficient, BinaryTreeNode<T> head){
         super(head);
-        this.balanceCoefficient = balanceCoefficient;
+        checkAndSetBalanceCoefficient(balanceCoefficient);
         maxNumberOfNodes = currentNumberOfNodes = head.getSize();
+    }
+
+    private void checkAndSetBalanceCoefficient(double balanceCoefficient){
+        if(balanceCoefficient < 0.5 || balanceCoefficient >= 1){
+            throw new RuntimeException("ScapegoatTree::checkAndSetBalanceCoefficient: balanceCoefficient не находится в интервале [0.5;1)!");
+        }
+        this.balanceCoefficient = balanceCoefficient;
     }
 
     @Override
@@ -63,6 +70,13 @@ public class ScapegoatTree<T extends Comparable<T>> extends BaseBinaryTree<T> {
             criticalScapegoatSize = balanceCoefficient * currentScapegoatParentSize;
         }
 
+        currentScapegoat = insertStack.pop();
+        try {
+            currentScapegoatParent = insertStack.peek();
+        } catch (Exception e){
+            currentScapegoatParent = null;
+        }
+
         rebuildNode(currentScapegoat, currentScapegoatParent);
     }
 
@@ -72,7 +86,13 @@ public class ScapegoatTree<T extends Comparable<T>> extends BaseBinaryTree<T> {
         tempTree.rebalance();
         maxNumberOfNodes = currentNumberOfNodes;
 
-        parentNode.replaceChild(headNode, tempTree.head);
+        BinaryTreeNode<T> newHeadNode = tempTree.head;
+
+        if(parentNode == null){
+            head = newHeadNode;
+        } else {
+            parentNode.replaceChild(headNode, newHeadNode);
+        }
     }
 
     @Override

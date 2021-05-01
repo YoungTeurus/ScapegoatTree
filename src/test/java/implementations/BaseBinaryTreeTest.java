@@ -23,6 +23,17 @@ class BaseBinaryTreeTest {
     }
 
     @Test
+    void unbalancedInsert() {
+        BinaryTree<Integer> scapegoatTree = new BaseBinaryTree<>();
+
+        for (int i = 0; i < 100; i++) {
+            scapegoatTree.insert(i);
+        }
+
+        assertEquals(100, scapegoatTree.size());
+    }
+
+    @Test
     void rebalance(){
         BaseBinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
 

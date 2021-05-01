@@ -25,6 +25,17 @@ class ScapegoatTreeTest {
     }
 
     @Test
+    void unbalancedInsert() {
+        BinaryTree<Integer> scapegoatTree = new ScapegoatTree<>();
+
+        for (int i = 0; i < 100; i++) {
+            scapegoatTree.insert(i);
+        }
+
+        assertEquals(100, scapegoatTree.size());
+    }
+
+    @Test
     void remove() {
         BinaryTree<Integer> scapegoatTree = new ScapegoatTree<>();
         Vector<Integer> addedElements = new Vector<>();
