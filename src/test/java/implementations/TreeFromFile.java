@@ -14,8 +14,12 @@ public class TreeFromFile {
         System.out.println(binaryTree.toString());
         assertEquals(1000, binaryTree.size());
 
+        System.out.println("Было загружено: " + binaryTree.size() + " строк.");
+
         System.out.println("Наименьший: " + binaryTree.findLowest());
         System.out.println("Наибольший: " + binaryTree.findGreatest());
+
+        System.out.println("Содержит ли 'java'? : " + binaryTree.contains("java"));
 
         System.out.println("Больше чем 'java':");
         for (String value :
@@ -38,6 +42,10 @@ public class TreeFromFile {
         }
         System.out.println();
 
+        System.out.println("Удалим 'java'...");
+        binaryTree.remove("java");
+        System.out.println("Количество элементов в дереве: " + binaryTree.size() + " строк.");
+        System.out.println("Содержит ли 'java'? : " + binaryTree.contains("java"));
     }
 
     @Test
@@ -46,8 +54,12 @@ public class TreeFromFile {
         System.out.println(binaryTree.toString());
         assertEquals(1000, binaryTree.size());
 
+        System.out.println("Было загружено: " + binaryTree.size() + " строк.");
+
         System.out.println("Наименьший: " + binaryTree.findLowest());
         System.out.println("Наибольший: " + binaryTree.findGreatest());
+
+        System.out.println("Содержит ли '0'? : " + binaryTree.contains(0));
 
         System.out.println("Больше чем '-100':");
         for (Integer value :
@@ -69,5 +81,10 @@ public class TreeFromFile {
             System.out.print(value + " ");
         }
         System.out.println();
+
+        System.out.println("Удалим '0'...");
+        binaryTree.remove(0);
+        System.out.println("Количество элементов в дереве: " + binaryTree.size() + " строк.");
+        System.out.println("Содержит ли '0'? : " + binaryTree.contains(0));
     }
 }
