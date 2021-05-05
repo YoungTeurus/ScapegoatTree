@@ -42,8 +42,9 @@ public class ScapegoatTree<T extends Comparable<T>> extends BaseBinaryTree<T> {
 
     private void checkDepthOfInsertStackAndRebalanceTreeIfNeeded(BinaryTreeNode<T> insertedNode, Stack<BinaryTreeNode<T>> insertStack){
         double currentMaxDepth = calculateCurrentMaxDepth();
+        int insertDepth = insertStack.size();
 
-        if(insertStack.size() > currentMaxDepth){
+        if(insertDepth > currentMaxDepth){
             findScapegoatNodeAndRebuildIt(insertedNode, insertStack);
         }
     }

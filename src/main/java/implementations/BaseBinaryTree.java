@@ -35,8 +35,10 @@ public class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
             T valueOfNodeToInsert = nodeToInsert.getValue();
 
             insertStack = getInsertStackForValue(valueOfNodeToInsert);
+
             BinaryTreeNode<T> nodeToAppend = insertStack.peek();
             T valueOfNodeToAppend = nodeToAppend.getValue();
+
             if(valueOfNodeToInsert.compareTo(valueOfNodeToAppend) <= 0){
                 nodeToAppend.setLeft(nodeToInsert);
             } else {
@@ -149,7 +151,6 @@ public class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
      *                            Необходимо для insert().
      * @return Стек trace поиска.
      */
-    // TODO: вернуть модификатор доступа private!
     private Stack<BinaryTreeNode<T>> getSearchStackForValue(@NotNull T valueToFind, boolean allowReturningEqual){
         Stack<BinaryTreeNode<T>> searchStack = new Stack<>();
 
