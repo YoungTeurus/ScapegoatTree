@@ -14,7 +14,7 @@ public class SpeedComparing {
     @Test
     void speedRandom(){
         long startTime, elapsedTime;
-        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> baseBinaryTree = new SimpleBinaryTree<>();
         BinaryTree<Integer> scapegoatTree = new ScapegoatTree<>();
 
         startTime = System.currentTimeMillis();
@@ -57,7 +57,7 @@ public class SpeedComparing {
     @Test
     void speedUnbalanced(){
         long startTime, elapsedTime;
-        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> baseBinaryTree = new SimpleBinaryTree<>();
         BinaryTree<Integer> scapegoatTree = new ScapegoatTree<>();
 
         startTime = System.currentTimeMillis();

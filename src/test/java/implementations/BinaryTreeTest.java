@@ -7,13 +7,13 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BaseBinaryTreeTest {
+class BinaryTreeTest {
 
     Random random = new Random();
 
     @Test
     void insert() {
-        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> baseBinaryTree = new SimpleBinaryTree<>();
 
         for (int i = 0; i < 100; i++) {
             baseBinaryTree.insert(random.nextInt());
@@ -24,7 +24,7 @@ class BaseBinaryTreeTest {
 
     @Test
     void unbalancedInsert() {
-        BinaryTree<Integer> scapegoatTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> scapegoatTree = new SimpleBinaryTree<>();
 
         for (int i = 0; i < 100; i++) {
             scapegoatTree.insert(i);
@@ -35,7 +35,7 @@ class BaseBinaryTreeTest {
 
     @Test
     void rebalance(){
-        BaseBinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        SimpleBinaryTree<Integer> baseBinaryTree = new SimpleBinaryTree<>();
 
         for (int i = 0; i < 100; i++) {
             baseBinaryTree.insert(random.nextInt());
@@ -48,12 +48,12 @@ class BaseBinaryTreeTest {
 
     @Test
     void remove() {
-        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> baseBinaryTree = new SimpleBinaryTree<>();
         Vector<Integer> addedElements = new Vector<>();
         Vector<Integer> removedElements = new Vector<>();
 
         while(addedElements.size() < 1000){
-            int generatedValue = Math.abs(random.nextInt()) % 20001 - 10000;
+            int generatedValue = Math.abs(random.nextInt());
             if(addedElements.contains(generatedValue)){
                 continue;
             }
@@ -66,10 +66,7 @@ class BaseBinaryTreeTest {
 
         // Первоначальная проверка вставки:
         for (Integer value : addedElements) {
-            if(!baseBinaryTree.contains(value)){
-                int b = 5;
-            }
-            // assertTrue(baseBinaryTree.contains(value));
+            assertTrue(baseBinaryTree.contains(value));
         }
 
         // Удаляем по одному элементу:
@@ -91,7 +88,7 @@ class BaseBinaryTreeTest {
 
     @Test
     void contains(){
-        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> baseBinaryTree = new SimpleBinaryTree<>();
 
         for (int i = 0; i < 10; i++) {
             baseBinaryTree.insert(i);
@@ -110,7 +107,7 @@ class BaseBinaryTreeTest {
 
     @Test
     void getValuesLowerThan() {
-        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> baseBinaryTree = new SimpleBinaryTree<>();
 
         for (int i = 0; i < 100; i++) {
             baseBinaryTree.insert(i);
@@ -131,7 +128,7 @@ class BaseBinaryTreeTest {
 
     @Test
     void getValuesGreaterThan() {
-        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> baseBinaryTree = new SimpleBinaryTree<>();
 
         for (int i = 0; i < 100; i++) {
             baseBinaryTree.insert(i);
@@ -152,7 +149,7 @@ class BaseBinaryTreeTest {
 
     @Test
     void getValuesInRange() {
-        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> baseBinaryTree = new SimpleBinaryTree<>();
 
         for (int i = 0; i < 100; i++) {
             baseBinaryTree.insert(i);
@@ -182,7 +179,7 @@ class BaseBinaryTreeTest {
 
     @Test
     void findLowest() {
-        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> baseBinaryTree = new SimpleBinaryTree<>();
         Integer theMinimalValue = -100;
 
         // Заполняем вектор значениями больше -100, причём -100 стоит посередине.
@@ -205,7 +202,7 @@ class BaseBinaryTreeTest {
 
     @Test
     void findGreatest() {
-        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> baseBinaryTree = new SimpleBinaryTree<>();
         Integer theMaximumNumber = 100;
 
         // Заполняем вектор значениями больше -100, причём -100 стоит посередине.
@@ -228,7 +225,7 @@ class BaseBinaryTreeTest {
 
     @Test
     void isEmpty() {
-        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> baseBinaryTree = new SimpleBinaryTree<>();
 
         for (int i = 0; i < 100; i++) {
             baseBinaryTree.insert(i);
@@ -248,7 +245,7 @@ class BaseBinaryTreeTest {
     @Test
     void iterator() {
         // Подсчитаем сумму элементов:
-        BinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        BinaryTree<Integer> baseBinaryTree = new SimpleBinaryTree<>();
         int sum = 0;
         int iteratorSum = 0;
 
@@ -267,7 +264,7 @@ class BaseBinaryTreeTest {
 
     @Test
     void getSearchStackForValue(){
-        BaseBinaryTree<Integer> baseBinaryTree = new BaseBinaryTree<>();
+        SimpleBinaryTree<Integer> baseBinaryTree = new SimpleBinaryTree<>();
 
         for (int i = 0; i < 10; i++) {
             baseBinaryTree.insert(i);

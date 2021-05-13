@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
+public abstract class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
     protected BinaryTreeNode<T> head;
 
     public BaseBinaryTree(){
@@ -82,9 +82,7 @@ public class BaseBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
         actionAfterRemove();
     }
 
-    protected void actionAfterRemove(){
-
-    }
+    protected abstract void actionAfterRemove();
 
     private void remove(BinaryTreeNode<T> parentNode, BinaryTreeNode<T> nodeToRemove){
         boolean isNodeToRemoveIsHead = parentNode == null;

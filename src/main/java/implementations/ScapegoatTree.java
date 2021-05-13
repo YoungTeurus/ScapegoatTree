@@ -84,7 +84,7 @@ public class ScapegoatTree<T extends Comparable<T>> extends BaseBinaryTree<T> {
     }
 
     private void rebuildNode(BinaryTreeNode<T> headNode, BinaryTreeNode<T> parentNode){
-        BaseBinaryTree<T> tempTree = new BaseBinaryTree<>(headNode);
+        BaseBinaryTree<T> tempTree = new SimpleBinaryTree<>(headNode);
 
         tempTree.rebalance();
         maxNumberOfNodes = currentNumberOfNodes;
